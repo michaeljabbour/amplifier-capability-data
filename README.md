@@ -6,7 +6,7 @@ Watch the [63-second film](https://michaeljabbour.github.io/amplifier-capability
 
 An independent Python library with a Rust storage kernel. It retains exact bytes as content-addressed Cells in an append-only log, then lets each consumer derive scopes, relations and query views. Memory is one consumer; the storage library does not import or own Memory, your application or an AI model.
 
-[Explore the site](https://michaeljabbour.github.io/amplifier-capability-data/) · [Reviewed release and artifacts](https://github.com/michaeljabbour/amplifier-tool-data/releases/tag/v0.2.0-reviewed) · [Specification](docs/SPEC.md)
+[Explore the site](https://michaeljabbour.github.io/amplifier-capability-data/) · [Reviewed release and artifacts](https://github.com/michaeljabbour/amplifier-capability-data/releases/tag/v0.2.0-reviewed) · [Specification](docs/SPEC.md)
 
 ## Try it
 
@@ -19,7 +19,7 @@ python3 -m pip install 'git+https://github.com/michaeljabbour/amplifier-capabili
 amplifier-data-doctor --self-test
 ```
 
-The doctor creates and removes its own temporary fictional store. For durable operation, check `rust_extension: true`, `durable_available: true` and `self_test.durable_restart: true`. The source fallback is in-memory only. A [prebuilt macOS Apple silicon wheel](https://github.com/michaeljabbour/amplifier-tool-data/releases/download/v0.2.0-reviewed/amplifier_data-0.2.0-cp311-abi3-macosx_11_0_arm64.whl) is available; a source-built native wheel also passes acceptance on Ubuntu 24.04/Python 3.12. Other native platforms remain unverified by this release.
+The doctor creates and removes its own temporary fictional store. For durable operation, check `rust_extension: true`, `durable_available: true` and `self_test.durable_restart: true`. The source fallback is in-memory only. A [prebuilt macOS Apple silicon wheel](https://github.com/michaeljabbour/amplifier-capability-data/releases/download/v0.2.0-reviewed/amplifier_data-0.2.0-cp311-abi3-macosx_11_0_arm64.whl) is available; a source-built native wheel also passes acceptance on Ubuntu 24.04/Python 3.12. Other native platforms remain unverified by this release.
 
 ## What you can build
 
