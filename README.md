@@ -2,11 +2,11 @@
 
 Keep original evidence once. Build the views each capability needs.
 
-Watch the [63-second film](https://michaeljabbour.github.io/amplifier-tool-data/#film): one true sentence copied into three tools until no original is left, and how Data keeps the exact bytes once while each tool builds its own view. The example in it is fictional.
+Watch the [63-second film](https://michaeljabbour.github.io/amplifier-capability-data/#film): one true sentence copied into three tools until no original is left, and how Data keeps the exact bytes once while each tool builds its own view. The example in it is fictional.
 
 An independent Python library with a Rust storage kernel. It retains exact bytes as content-addressed Cells in an append-only log, then lets each consumer derive scopes, relations and query views. Memory is one consumer; the storage library does not import or own Memory, your application or an AI model.
 
-[Explore the site](https://michaeljabbour.github.io/amplifier-tool-data/) · [Reviewed release and artifacts](https://github.com/michaeljabbour/amplifier-tool-data/releases/tag/v0.2.0-reviewed) · [Specification](docs/SPEC.md)
+[Explore the site](https://michaeljabbour.github.io/amplifier-capability-data/) · [Reviewed release and artifacts](https://github.com/michaeljabbour/amplifier-tool-data/releases/tag/v0.2.0-reviewed) · [Specification](docs/SPEC.md)
 
 ## Try it
 
@@ -15,7 +15,7 @@ Python 3.11+, Git, Rust (`cargo` and `rustc`) and a native compiler are needed f
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
-python3 -m pip install 'git+https://github.com/michaeljabbour/amplifier-tool-data@40450647367db2a2b5058bea1d81a6d248c24c94'
+python3 -m pip install 'git+https://github.com/michaeljabbour/amplifier-capability-data@40450647367db2a2b5058bea1d81a6d248c24c94'
 amplifier-data-doctor --self-test
 ```
 
@@ -55,7 +55,7 @@ The [public release guide](docs/PUBLIC-RELEASE.md) identifies the exact reviewed
 
 Install `maturin>=1.15,<2` as a build tool, then run `python3 scripts/build_release.py`. Test an installed native wheel outside the checkout with `python3 scripts/test_installed.py`; source-only imports cannot establish durable behavior. See [architecture](docs/ARCHITECTURE.md), [specification](docs/SPEC.md) and the runnable `examples/`.
 
-The repository is `amplifier-tool-data`; package/import identities remain `amplifier-data` / `amplifier_data`.
+The repository is `amplifier-capability-data`; package/import identities remain `amplifier-data` / `amplifier_data`.
 
 ## License
 
