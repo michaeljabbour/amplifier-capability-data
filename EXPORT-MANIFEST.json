@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "2a2dc221357bfda72996bc394aa012b35eb34511d06e4d10b824fe1f944f6c1c",
+      "sha256": "8f1a916e9cee3e37fdd45abf24ed080928dcf38a319a279407df2ad03d1fbf3f",
       "license": "MIT"
     },
     {
@@ -511,6 +511,11 @@
       "license": "MIT"
     },
     {
+      "path": "docs/COACHING.md",
+      "sha256": "611a6acac329fcf51363c881ff8086dc21221a3d11918b7c3e412b406cd08aae",
+      "license": "MIT"
+    },
+    {
       "path": "docs/CONSTRAINTS.md",
       "sha256": "013cbcb84b8e9674b9564186a56b97b53efda7bea3fa476831a81277636dbbd5",
       "license": "MIT"
@@ -856,5 +861,5 @@
       "license": "MIT"
     }
   ],
-  "public_documentation_additions": "Native implementation unchanged from reviewed tag v0.2.0-reviewed. README, .gitignore and AGENTS hashes follow the current public documentation and capability identity. The reviewed tag preserves the original frozen source boundary; site assets, release guide and CI are later public additions."
+  "public_documentation_additions": "Native implementation unchanged from reviewed tag v0.2.0-reviewed. README, .gitignore and AGENTS hashes follow the current public documentation and capability identity; docs/COACHING.md is an authored optional review guide. The reviewed tag preserves the original frozen source boundary; site assets, release guide and CI are later public additions."
 }
