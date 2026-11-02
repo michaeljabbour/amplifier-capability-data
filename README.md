@@ -45,6 +45,8 @@ with TemporaryDirectory() as folder:
 
 The library owns no model and has no runtime Python dependencies. Optional intent compilers, critics and embedders belong to callers. One writer owns a durable file; multiple processes use the companion server/RemoteStore seam. Invalidating a fact does not erase bytes from the log. Read the [constraints](docs/CONSTRAINTS.md) before choosing it for real data.
 
+Scopes filter query membership; they are not ACLs or hostile-tenant isolation. A caller with a store handle can read a Cell by reference or query without a scope. Enforce authorization outside this API when your application needs it.
+
 ## What is verified
 
 The reviewed public release passed 533 installed-wheel Python checks, 121 Rust unit checks and 3 native durable gates on macOS Apple silicon. Public native CI also passes the installed-wheel suite and Rust kernel suite on Ubuntu 24.04/Python 3.12. Its two-consumer exercise checks scope separation, complete Cell regeneration and durable close/reopen. These are functional checks on temporary fictional data, not evidence of better agent answers, outside-user usefulness or production acceptance.

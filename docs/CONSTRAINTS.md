@@ -1,74 +1,55 @@
-# Honest Constraints — Where This Is the Wrong Tool
+# Storage boundaries and fit
 
-This design is correct only for a **specific regime**, and is actively *worse* than
-Postgres for most jobs. This document exists so the brainstorm starts grounded, not
-seduced. A simplicity zealot would rightly attack this design — so we pre-empt.
+Amplifier Data is a Python library with a native Rust storage kernel. It does
+not run an agent or own a model. Optional intent compilers, interpreters and
+embedders are supplied by consumers; their properties are not kernel guarantees.
 
----
+## What the native contract provides
 
-## Where it is WRONG to use
+- Retain exact source bytes as content-addressed Cells in an append-only log.
+- Derive scope membership, relationships and query views over the retained log.
+- Reconstruct a Cell from its logged events and verify exact bytes after a
+  materialized copy is dropped. An unlogged model output cannot be regenerated
+  by replaying a model and assuming it will answer identically.
+- Reopen durable logs through the compiled native kernel. The source-only Python
+  fallback is in-memory and cannot establish restart durability.
 
-### 1. Latency-sensitive paths
-An agent-in-the-query-path is **milliseconds-to-seconds**, not microseconds. Never put
-this in a checkout transaction, an ad-auction, or any hot path. It is for
-interpretation-heavy, **low-QPS**, high-ambiguity data — knowledge bases, research
-corpora, evolving domain models — not OLTP.
+## What scopes do not provide
 
-### 2. Anywhere you need determinism
-Intent-compiled queries and convergent integrity are **non-deterministic by
-construction.** That is disqualifying for ledgers, billing, and anywhere a query must
-mean exactly one thing forever.
-- *Partial recovery:* pin a lens + plan version and you recover determinism — **at the
-  cost of the magic.** (Is that pinned mode worth specifying as a first-class feature?
-  See `OPEN_QUESTIONS.md`.)
+A scope is a query-membership filter, **not an access-control list or tenant
+security boundary**. Code with a store handle can query without a scope or read
+another scope's Cell by reference. Consumers must enforce authorization and data
+separation outside this API when required. A test of two filtered result sets
+does not prove hostile-consumer isolation.
 
-### 3. Cost-sensitive / unbounded-growth scenarios
-"Meaning-on-spawn" is cheap at rest, but:
-- the **event log grows unbounded**, and
-- **replay-to-materialize has real compute cost.**
+## Operational limits
 
-You are trading storage durability guarantees for interpretation flexibility. Without
-compaction/checkpointing, cost is a real liability.
+- One writer owns a durable file. Use the supported companion server/RemoteStore
+  seam for multiple processes; do not assume independent direct writers are safe.
+- Invalidation is not erasure. Original bytes remain in the append-only history;
+  review retention and privacy requirements before storing real material.
+- Log growth, replay, derived indexes and optional interpretation have workload
+  costs. Measure your record sizes, write/read pattern and recovery path. There
+  is no universal latency or cost claim for every corpus.
+- Native platform and toolchain acceptance are recorded separately. Do not infer
+  Windows or another untested platform from a macOS/Ubuntu result.
 
----
+## Determinism belongs to the selected layer
 
-## The hard kernel question (the load-bearing risk)
+Exact logged payloads and pinned deterministic folds can be replayable. A caller
+that adds a model-generated plan or interpretation must retain its defining
+inputs, implementation/version and actual output rather than treating a seed or
+a prompt as a byte-reproduction guarantee. Check native storage correctness
+separately from the meaning or quality of an optional generated view.
 
-> The entire design rests on the event log genuinely being the floor and Cells being
-> **truly regenerable** from it.
+## Compare the job before adding a substrate
 
-The moment an interpreter has **hidden, non-reproducible state**, the "regenerable brick"
-guarantee breaks — and you have a normal database wearing a costume.
+For ordinary CRUD or an established relational application, compare the existing
+SQLite/Postgres design first. This library is a candidate when exact retained
+source evidence, derivation and replaceable consumer views solve a concrete job.
+No superiority over those alternatives follows from the architecture alone.
 
-This is the single assumption most likely to sink the project. Any implementation must
-treat *reproducibility of interpretation* as a first-class, tested invariant — not an
-aspiration. If an interpreter calls a non-deterministic model, that non-determinism must
-be captured in the log (e.g. seed, model version, full output recorded as an event), or
-the floor is a lie.
-
----
-
-## What a skeptic should keep hammering
-
-Bring these to the brainstorm and do not let them be hand-waved:
-
-1. **"Why not just Postgres + pgvector + a good schema?"** — For most workloads, that *is*
-   the right answer. What is the *specific* workload where it isn't?
-2. **"Show me the regeneration actually working."** — Delete a materialized cell, replay,
-   prove bit-for-bit (or semantically-equivalent) recovery.
-3. **"Where does the non-determinism get pinned?"** — Concretely, in which event field?
-4. **"What's the compaction story?"** — An append-only log with no compaction is a
-   disk-fill bug with extra steps.
-5. **"What is the smallest thing that proves the core inversion?"** — meaning-on-spawn +
-   reflexive index. If a tiny prototype can't show that, the big version won't either.
-
----
-
-## The honest one-liner
-
-> Right for interpretation-heavy knowledge; **wrong** for anything that needs a microsecond
-> or a single fixed answer.
-
-If the use case in front of you needs a microsecond or a single fixed answer, stop —
-`amplifier-data` is the wrong tool, and that is a feature of this document, not a failure
-of the design.
+Use a bounded fictional fixture first: positive scoped membership, a record that
+must stay out of that query, exact regeneration and a fresh-process reopen. Then
+measure an actual user's task, setup burden, recovery, time and cost against a
+matched baseline. Unit tests do not establish outside-user usefulness.

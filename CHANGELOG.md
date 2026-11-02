@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — storage and scope claim boundaries
+
+- Distinguish the deterministic native storage floor from optional caller-owned model interpretation. Replace historical concept-stage constraints that described an agent in every query.
+- State that scope membership filters are not ACLs. Retain one-writer, native durability, invalidation/retention and platform limits; no native implementation or performance claim changes.
+
 ## Unreleased — optional coaching checkpoint
 
 - Add a self-contained opt-in practice/review guide with a fictional task, preserved baseline, explicit scope/budget, user stop, reviewed keep/revert and private-by-choice records. Keep native operations, existing method budgets and evidence rules unchanged; no human efficacy or outside-use result is claimed.

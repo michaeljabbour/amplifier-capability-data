@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "8f1a916e9cee3e37fdd45abf24ed080928dcf38a319a279407df2ad03d1fbf3f",
+      "sha256": "667848b0f77c82741d377c2659a0952f21a9759e5d255ab61d9fabca40821786",
       "license": "MIT"
     },
     {
@@ -517,7 +517,7 @@
     },
     {
       "path": "docs/CONSTRAINTS.md",
-      "sha256": "013cbcb84b8e9674b9564186a56b97b53efda7bea3fa476831a81277636dbbd5",
+      "sha256": "cd05d453014c417767b2bae04aff060f9b67c02047a8b119d1fd3426d113e0b3",
       "license": "MIT"
     },
     {
